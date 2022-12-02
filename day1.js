@@ -1,13 +1,4 @@
-const fs = require('fs');
-
-const readFileData = (fileDir) => {
-    try {
-        const data = fs.readFileSync(fileDir, 'utf-8');
-        return data;
-    } catch (error) {
-        throw Error(`Error: ${error}`);
-    }
-};
+const reader = require('./reader');
 
 const processData = (fileData) => {
     const splitted = fileData.split('\n');
@@ -33,10 +24,10 @@ const processData = (fileData) => {
 }
 
 const getData = (fileDir) => {
-    const fileData = readFileData(fileDir);
+    const fileData = reader.readFileData(fileDir);
     const data = processData(fileData);
 
     return data;
 }
 
-console.log(getData('elfs.txt'));
+console.log(getData('day1.txt'));
