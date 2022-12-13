@@ -103,11 +103,13 @@ const findSizeForDelete = (dir) => {
     const totalLeft = 70000000 - dir.size;
     const required = 30000000;
 
-    const candidates = [];
+    let minSizeDir = dir.size;
 
     const findInner = (inner) => {
         if (inner.size + totalLeft >= required) {
-            candidates.push(inner);
+            if (inner.size < minSizeDir) {
+                minSizeDir = inner.size;
+            }
         }
         for (const child of inner.children.values()) {
             if (child instanceof Directory) {
@@ -118,13 +120,7 @@ const findSizeForDelete = (dir) => {
 
     findInner(dir);
 
-    const sorted = candidates.sort((a, b) => {
-        if (a.size < b.size) {
-            return - 1;
-        }
-    });
-
-    return sorted[0].size;
+    return minSizeDir;
 };
 
 console.log(findSize(day7));
